@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  #resources :beers
+  # resources :beers
 
   namespace :api do
     namespace :v1 do
@@ -8,7 +8,7 @@ Rails.application.routes.draw do
       delete 'beers/:id', to: 'beers#destroy'
     end
   end
-  
+
   root 'pages#home'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
