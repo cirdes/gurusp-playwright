@@ -1,13 +1,5 @@
 import React, { useState } from "react";
+import Routes from "../routes/index";
+//import "antd/dist/antd.css";
 
-function App() {
-  const [count, setCount] = useState(0);
-  return (
-    <div>
-      <p>You clicked {count} times!</p>
-      <button onClick={() => setCount(count + 1)}>Click me</button>
-    </div>
-  );
-}
-
-export default App;
+export default () => <>{Routes}</>;
