@@ -10,7 +10,7 @@ class AddBeerModal extends React.Component {
   };
 
   onFinish = (values) => {
-    const url = "api/v1/beers/";
+    const url = "api/v1/beers/create";
     fetch(url, {
       method: "post",
       headers: {
@@ -51,7 +51,7 @@ class AddBeerModal extends React.Component {
           Create New +
         </Button>
 
-        <Modal title="Add New Beer ..." visible={this.state.visible} onCancel={this.handleCancel} footer={null}>
+        <Modal title="Add New Beer ..." open={this.state.visible} onCancel={this.handleCancel} footer={null}>
           <Form ref={this.formRef} layout="vertical" onFinish={this.onFinish}>
             <Form.Item name="brand" label="Brand" rules={[{ required: true, message: "Please input your beer brand!" }]}>
               <Input placeholder="Input your beer brand" />
@@ -71,7 +71,7 @@ class AddBeerModal extends React.Component {
                 },
               ]}
             >
-              <Select showSearch placeholder="Select your beer country" optionFilterProp="children" style={{ width: "100%" }}>
+              <Select showSearch placeholder="Select your beer country" optionFilterProp="items" style={{ width: "100%" }}>
                 <Option value="Finland">Finland</Option>
                 <Option value="Germany">Germany</Option>
                 <Option value="Netherlands">Netherlands</Option>
