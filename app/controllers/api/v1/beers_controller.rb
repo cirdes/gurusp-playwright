@@ -26,14 +26,17 @@ class Api::V1::BeersController < ApplicationController
   
     # GET /beers/1/edit
     def edit
+      if @beer
+        render json: @beer
+      else
+        render json: @beer.errors
+      end
     end
   
     # POST /beers
     # POST /beers.json
     def create
       @beer = Beer.new(beer_params)
-  
-  
       if @beer.save
         render json: @beer
       else
@@ -44,13 +47,17 @@ class Api::V1::BeersController < ApplicationController
     # PATCH/PUT /beers/1
     # PATCH/PUT /beers/1.json
     def update
+      if @beer.update(beer_params)
+        render json: @beer
+      else
+        render json: @beer.errors
+      end
     end
   
     # DELETE /beers/1
     # DELETE /beers/1.json
     def destroy
       @beer.destroy
-  
       render json: { notice: 'Beer was successfully removed.' }
     end
   

@@ -5,6 +5,8 @@ Rails.application.routes.draw do
     namespace :v1 do
       get 'beers/index'
       post 'beers/create'
+      get 'beers/edit/:id', to: 'beers#edit'
+      post 'beers/update'
       delete 'beers/:id', to: 'beers#destroy'
     end
   end

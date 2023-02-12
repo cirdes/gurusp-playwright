@@ -1,6 +1,7 @@
 import { Table, message, Popconfirm } from "antd";
 import React from "react";
 import AddBeerModal from "./AddBeerModal";
+import EditBeerModal from "./EditBeerModal";
 
 class Beers extends React.Component {
   columns = [
@@ -28,7 +29,19 @@ class Beers extends React.Component {
       title: "",
       key: "action",
       render: (_text, record) => (
-        <Popconfirm title="Are you sure to delete this beer?" onConfirm={() => this.deleteBeer(record.id)} okText="Yes" cancelText="No">
+        <EditBeerModal reloadBeers={this.reloadBeers} beer={record} />
+      ),
+    },
+    {
+      title: "",
+      key: "action",
+      render: (_text, record) => (
+        <Popconfirm
+          title="Are you sure to delete this beer?"
+          onConfirm={() => this.deleteBeer(record.id)}
+          okText="Yes"
+          cancelText="No"
+        >
           <a href="#" type="danger">
             Delete{" "}
           </a>
@@ -97,9 +110,15 @@ class Beers extends React.Component {
   render() {
     return (
       <>
-        <Table className="table-striped-rows" dataSource={this.state.beers} columns={this.columns} pagination={{ pageSize: 5 }} />
+        <Table
+          className="table-striped-rows"
+          dataSource={this.state.beers}
+          columns={this.columns}
+          pagination={{ pageSize: 5 }}
+        />
 
         <AddBeerModal reloadBeers={this.reloadBeers} />
+
       </>
     );
   }
