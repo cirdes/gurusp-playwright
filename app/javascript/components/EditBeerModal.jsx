@@ -12,7 +12,6 @@ class EditBeerModal extends React.Component {
   onFinish = (values) => {
     const url = "api/v1/beers/update";
     values.id = this.props.beer.id;
-    console.log("Values: " + JSON.stringify(values));
     fetch(url, {
       method: "post",
       headers: {
@@ -47,12 +46,7 @@ class EditBeerModal extends React.Component {
   };
 
   render() {
-    console.log("EditBeerModal props:");
-   
-
     let beer = this.props.beer;
-
-    console.log(beer);
     return (
       <>
         <a onClick={this.showModal}>Edit</a>
