@@ -6,11 +6,16 @@
     "@hotwired/turbo-rails": "^7.2.5",
     "antd": "^5.2.0",
     "esbuild": "^0.17.7",
+    "playwright": "^1.33.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.8.1"
   },
   "scripts": {
-    "build": "esbuild app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds --public-path=assets --loader:.js=jsx"
+    "build": "esbuild app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds --public-path=assets --loader:.js=jsx",
+    "test-log": "tail -f log/test.log"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.33.0"
   }
 }
