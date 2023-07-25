@@ -1,24 +1,23 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+1. Ingredients
 
-Things you may want to cover:
+- ruby v3.2.2
+- yarn v1
 
-* Ruby version
+1. Kegging up!!!
 
-* System dependencies
+- Run `bundle`
+- Run `yarn install`
 
-* Configuration
+2. Serving
 
-* Database creation
+To run the project building assets on the go use the command `yarn dev`
 
-* Database initialization
+3. Tasting
 
-* How to run the test suite
+You can run E2E test using the command `yarn test-e2e spec/javascript/delete_beer.spec.js`
 
-* Services (job queues, cache servers, search engines, etc.)
+To use the Playwright debugger add the env variable `PWDEBUG=1` before the command: `PWDEBUG=1 yarn test-e2e spec/javascript/delete_beer.spec.js`
 
-* Deployment instructions
-
-* ...
+If also you need to check the Rails server output of a E2E test add the env variable `DEBUG=pw:webserver` before the command: PWDEBUG=1 `DEBUG=pw:webserver yarn test-e2e spec/javascript/delete_beer.spec.js`

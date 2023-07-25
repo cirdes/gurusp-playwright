@@ -12,6 +12,8 @@
     "react-router-dom": "^6.8.1"
   },
   "scripts": {
+    "dev": "bin/dev",
+    "test-e2e": "playwright test --workers=1",
     "build": "esbuild app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds --public-path=assets --loader:.js=jsx",
     "test-log": "tail -f log/test.log"
   },

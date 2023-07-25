@@ -24,6 +24,8 @@ test.describe("/beers", () => {
     await page.goto("http://localhost:3001/");
     await page.getByRole("button", { name: "Create New +" }).click();
     await page.getByPlaceholder("Input your beer brand").fill("skoll");
+    await page.getByLabel("Country").click();
+    await page.getByTitle("Germany").getByText("Germany").click();
     await page.getByPlaceholder("Input your beer style").fill("pilsen");
     await page.getByPlaceholder("How many beers you desire?").fill("2");
     await page.getByRole("button", { name: "Submit" }).click();
