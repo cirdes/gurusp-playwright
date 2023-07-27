@@ -1,7 +1,7 @@
 require 'rails_helper'
 require 'factory_bot_rails'
 
-RSpec.describe 'Beers', type: :request do
+RSpec.describe 'API::V1::Beers', type: :request do
   describe "GET /api/v1/beers" do
     context 'when there is beers persisted on database' do
       before do
@@ -25,6 +25,7 @@ RSpec.describe 'Beers', type: :request do
       end
     end
   end
+
   describe 'GET /api/v1/beers/:id' do
     context 'with an existent beer' do
       let(:beer) { FactoryBot.create(:beer, brand: "mano lelo") }
