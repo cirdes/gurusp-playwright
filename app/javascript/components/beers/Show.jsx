@@ -3,7 +3,7 @@ import { Layout, Menu, theme } from 'antd';
 import { useState } from 'react';
 import React from "react";
 import BeerDetail from "./BeerDetail";
-import Header from "./Header";
+import Header from "../Header";
 
 const { Content, Footer, Sider } = Layout;
 

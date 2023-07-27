@@ -1,35 +1,12 @@
-import { Button, Form, Input, Modal, Select } from "antd";
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { Button, Form, Input, Modal } from "antd";
 
-class AddBeerModal extends React.Component {
+class BeerModal extends React.Component {
   formRef = React.createRef();
   state = {
     visible: false,
-    selectedCountry: ""
-  };
-
-  onFinish = (values) => {
-    const url = "api/v1/beers/create";
-    fetch(url, {
-      method: "post",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(values),
-    })
-      .then((data) => {
-        if (data.ok) {
-          this.handleCancel();
-
-          return data.json();
-        }
-        throw new Error("Network error.");
-      })
-      .then(() => {
-        this.props.reloadBeers();
-        this.formRef.current.resetFields();
-      })
-      .catch((err) => console.error("Error: " + err));
+    selectedCountry: "",
+    brandValue: "",
   };
 
   handleBrandBlur = () => {
@@ -39,6 +16,18 @@ class AddBeerModal extends React.Component {
 
   handleBrandChange = (e) => {
     this.setState({ brandValue: e.target.value });
+  };
+
+  handleCancel = () => {
+    this.setState({
+      visible: false,
+    });
+  };
+
+  showModal = () => {
+    this.setState({
+      visible: true,
+    });
   };
 
   getBreweryInfo = async (value) => {
@@ -57,16 +46,31 @@ class AddBeerModal extends React.Component {
     }
   };
 
-  showModal = () => {
-    this.setState({
-      visible: true,
-    });
-  };
-
-  handleCancel = () => {
-    this.setState({
-      visible: false,
-    });
+  onFinish = (values) => {
+    const { onFinish } = this.props;
+    const url = this.props.title === "Add New Beer" ? "api/v1/beers/create" : "api/v1/beers/update";
+    if (this.props.title === "Edit Beer") { 
+      values.id = this.props.initialValues.id;
+    }
+    fetch(url, {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(values),
+    })
+      .then((data) => {
+        if (data.ok) {
+          this.handleCancel();
+          return data.json();
+        }
+        throw new Error("Network error.");
+      })
+      .then(() => {
+        onFinish();
+        this.formRef.current.resetFields();
+      })
+      .catch((err) => console.error("Error: " + err));
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -79,15 +83,24 @@ class AddBeerModal extends React.Component {
   }
 
   render() {
+    const { initialValues, title } = this.props;
+    const { visible, selectedCountry } = this.state;
+
     return (
       <>
         <Button type="primary" onClick={this.showModal}>
-          Create New +
+          {this.props.title === "Add New Beer" ? "Create New +" : "Edit"}
         </Button>
 
-        <Modal title="Add New Beer ..." open={this.state.visible} onCancel={this.handleCancel} footer={null}>
-          <Form ref={this.formRef} layout="vertical" onFinish={this.onFinish}>
-            <Form.Item name="brand" label="Brand" rules={[{ required: true, message: "Please input your beer brand!" }]} onChange={this.handleBrandChange} onBlur={this.handleBrandBlur}>
+        <Modal title={title} open={visible} onCancel={this.handleCancel} footer={null}>
+          <Form ref={this.formRef} layout="vertical" onFinish={this.onFinish} initialValues={initialValues}>
+            <Form.Item
+              name="brand"
+              label="Brand"
+              rules={[{ required: true, message: "Please input your beer brand!" }]}
+              onChange={this.handleBrandChange}
+              onBlur={this.handleBrandBlur}
+            >
               <Input placeholder="Input your beer brand" />
             </Form.Item>
 
@@ -105,7 +118,7 @@ class AddBeerModal extends React.Component {
                 },
               ]}
               onChange={(e) => this.setState({ selectedCountry: e.target.value })}
-              value={this.state.selectedCountry}
+              value={selectedCountry}
             >
               <Input placeholder="Input your beer country" />
             </Form.Item>
@@ -126,4 +139,4 @@ class AddBeerModal extends React.Component {
   }
 }
 
-export default AddBeerModal;
+export default BeerModal;

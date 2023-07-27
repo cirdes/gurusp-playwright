@@ -2,7 +2,7 @@ import { PieChartOutlined, DesktopOutlined, UserOutlined, TeamOutlined, FileOutl
 import { Layout, Menu, theme } from 'antd';
 import { useState } from 'react';
 import React from "react";
-import Beers from "./Beers";
+import Beers from "./beers/Beers";
 import Header from "./Header";
 
 const { Content, Footer, Sider } = Layout;
