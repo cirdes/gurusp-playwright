@@ -40,7 +40,7 @@ class Api::V1::BeersController < ApplicationController
     if @beer.save
       render json: @beer
     else
-      render json: @beer.errors
+      render json: @beer.errors, status: :unprocessable_entity
     end
   end
 
@@ -50,7 +50,7 @@ class Api::V1::BeersController < ApplicationController
     if @beer.update(beer_params)
       render json: @beer
     else
-      render json: @beer.errors
+      render json: @beer.errors, status: :unprocessable_entity
     end
   end
 
@@ -66,6 +66,8 @@ class Api::V1::BeersController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_beer
     @beer = Beer.find(params[:id])
+  rescue ActiveRecord::RecordNotFound => error
+    render json: { error: error.message }, status: :not_found
   end
 
   # Only allow a list of trusted parameters through.
