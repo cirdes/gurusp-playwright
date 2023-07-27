@@ -17,6 +17,6 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
-
+  resources :beers, only: [:show]
   resource :factories, only: %i[create destroy] if Rails.env.test?
 end
