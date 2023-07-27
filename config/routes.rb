@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       get 'beers/index'
       post 'beers/create'
       get 'beers/edit/:id', to: 'beers#edit'
+      get 'beers/:id', to: 'beers#show'
       post 'beers/update'
       delete 'beers/:id', to: 'beers#destroy'
     end
