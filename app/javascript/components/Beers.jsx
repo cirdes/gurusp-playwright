@@ -1,5 +1,6 @@
 import { Table, message, Popconfirm } from "antd";
 import React from "react";
+import { Link } from 'react-router-dom';
 import AddBeerModal from "./AddBeerModal";
 import EditBeerModal from "./EditBeerModal";
 
@@ -24,6 +25,13 @@ class Beers extends React.Component {
       title: "Quantity",
       dataIndex: "quantity",
       key: "quantity",
+    },
+    {
+      title: "",
+      key: "action",
+      render: (_text, record) => (
+        <Link to={`/beers/${record.id}`}>Details</Link>
+      ),
     },
     {
       title: "",
