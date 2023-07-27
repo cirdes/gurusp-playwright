@@ -35,7 +35,7 @@ const ShowBeer = () => {
     <>
     <div>
       <Button type="primary" onClick={handleNavigateToBeers}>
-        Back To All Beers
+        Back To Beer Catalog
       </Button>
       </div><br/><br/>
       <div>
