@@ -1,8 +1,6 @@
 import { Button, Form, Input, Modal, Select } from "antd";
 import React from "react";
 
-const { Option } = Select;
-
 class EditBeerModal extends React.Component {
   formRef = React.createRef();
   state = {
@@ -33,6 +31,52 @@ class EditBeerModal extends React.Component {
       .catch((err) => console.error("Error: " + err));
   };
 
+  handleBrandBlur = () => {
+    const { brandValue } = this.state;
+    this.getBreweryInfo(brandValue);
+  };
+
+  handleBrandChange = (e) => {
+    this.setState({ brandValue: e.target.value });
+  };
+
+  getBreweryInfo = async (value) => {
+    const url = `https://api.openbrewerydb.org/v1/breweries/search?query=${value}&per_page=1`;
+
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+
+      if (data.length !== 0) {
+        const selectedCountry = data[0].country;
+        this.setState({ selectedCountry });
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  showModal = () => {
+    this.setState({
+      visible: true,
+    });
+  };
+
+  handleCancel = () => {
+    this.setState({
+      visible: false,
+    });
+  };
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.selectedCountry !== this.state.selectedCountry) {
+      const form = this.formRef.current;
+      if (form) {
+        form.setFieldsValue({ country: this.state.selectedCountry });
+      }
+    }
+  }
+
   showModal = () => {
     this.setState({
       visible: true,
@@ -53,7 +97,7 @@ class EditBeerModal extends React.Component {
 
         <Modal title="Edit Beer ..." open={this.state.visible} onCancel={this.handleCancel} footer={null}>
           <Form ref={this.formRef} layout="vertical" onFinish={this.onFinish} initialValues={beer}>
-            <Form.Item name="brand" label="Brand" rules={[{ required: true, message: "Please input your beer brand!" }]}>
+          <Form.Item name="brand" label="Brand" rules={[{ required: true, message: "Please input your beer brand!" }]} onChange={this.handleBrandChange} onBlur={this.handleBrandBlur}>
               <Input placeholder="Input your beer brand" />
             </Form.Item>
 
@@ -70,15 +114,10 @@ class EditBeerModal extends React.Component {
                   message: "Please input the country of the beer!",
                 },
               ]}
+              onChange={(e) => this.setState({ selectedCountry: e.target.value })}
+              value={this.state.selectedCountry}
             >
-              <Select showSearch placeholder="Select your beer country" optionFilterProp="items" style={{ width: "100%" }}>
-                <Option value="Finland">Finland</Option>
-                <Option value="Germany">Germany</Option>
-                <Option value="Netherlands">Netherlands</Option>
-                <Option value="UK">UK</Option>
-                <Option value="USA">USA</Option>
-                <Option value="Other">Other</Option>
-              </Select>
+              <Input placeholder="Input your beer country" />
             </Form.Item>
 
             <Form.Item name="quantity" label="Quantity" rules={[{ required: true, message: "Please input the quantity!" }]}>
