@@ -99,8 +99,7 @@ class BeerModal extends React.Component {
               label="Brand"
               rules={[{ required: true, message: "Please input your beer brand!" }]}
               onChange={this.handleBrandChange}
-              onBlur={this.handleBrandBlur}
-            >
+              onBlur={this.handleBrandBlur}>
               <Input placeholder="Input your beer brand" />
             </Form.Item>
 
@@ -111,19 +110,12 @@ class BeerModal extends React.Component {
             <Form.Item
               name="country"
               label="Country"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input the country of the beer!",
-                },
-              ]}
               onChange={(e) => this.setState({ selectedCountry: e.target.value })}
-              value={selectedCountry}
-            >
+              value={selectedCountry}>
               <Input placeholder="Input your beer country" />
             </Form.Item>
 
-            <Form.Item name="quantity" label="Quantity" rules={[{ required: true, message: "Please input the quantity!" }]}>
+            <Form.Item name="quantity" label="Quantity">
               <Input type="number" placeholder="How many beers you desire?" />
             </Form.Item>
 
